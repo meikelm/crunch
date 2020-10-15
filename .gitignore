@@ -1,7 +1,10 @@
 *.o
-*.2010.vcxproj.user
-*.2010.suo
-/crnlib/crunch
+*.vcxproj.user
+*.suo
+*.layout
+*.depend
+.DS_Store
+.vs
 /crnlib/Win32
 /crnlib/x64
 /crunch/Win32
@@ -13,5 +16,4 @@
 /example3/Win32
 /example3/x64
 /lib
-/bin/*
-!bin/crunch_x64.exe
+/bin

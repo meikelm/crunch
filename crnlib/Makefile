@@ -1,5 +1,6 @@
-COMPILE_OPTIONS = -O3 -fomit-frame-pointer -ffast-math -fno-math-errno -g -fno-strict-aliasing -Wall -Wno-unused-value -Wno-unused -march=core2
-LINKER_OPTIONS = -lpthread -g
+COMPILE_OPTIONS = -O3 -fomit-frame-pointer -ffast-math -fno-math-errno -fno-strict-aliasing
+# -Wall -Wno-unused-value -Wno-unused-local-typedefs -Wno-misleading-indentation
+LINKER_OPTIONS = -pthread
 
 OBJECTS = \
   crn_arealist.o \
@@ -51,7 +52,6 @@ OBJECTS = \
   crn_utils.o \
   crn_value.o \
   crn_vector.o \
-  crn_zeng.o \
   crn_texture_comp.o \
   crn_texture_conversion.o \
   crn_dds_comp.o \
@@ -77,20 +77,14 @@ OBJECTS = \
   lzma_LzmaEnc.o \
   lzma_LzmaLib.o
 
-all: crunch
+all: ../lib/libcrunch.a
 
 %.o: %.cpp
-	g++ $< -o $@ -c $(COMPILE_OPTIONS)
+	$(CXX) $< -o $@ -c $(COMPILE_OPTIONS)
 
-crunch.o: ../crunch/crunch.cpp
-	g++ $< -o $@ -c -I../inc -I../crnlib $(COMPILE_OPTIONS)
+../lib/libcrunch.a: $(OBJECTS)
+	if [ ! -d ../lib ]; then mkdir ../lib; fi
+	$(AR) rcs ../lib/libcrunch.a $(OBJECTS)
 
-corpus_gen.o: ../crunch/corpus_gen.cpp
-	g++ $< -o $@ -c -I../inc -I../crnlib $(COMPILE_OPTIONS)
-
-corpus_test.o: ../crunch/corpus_test.cpp
-	g++ $< -o $@ -c -I../inc -I../crnlib $(COMPILE_OPTIONS)
-
-crunch: $(OBJECTS) crunch.o corpus_gen.o corpus_test.o
-	g++ $(OBJECTS) crunch.o corpus_gen.o corpus_test.o -o crunch $(LINKER_OPTIONS)
-
+clean:
+	@rm -f $(OBJECTS)

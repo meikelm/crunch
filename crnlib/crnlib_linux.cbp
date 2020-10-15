@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="libcrnlibD" prefix_auto="1" extension_auto="1" />
+				<Option output="../lib/crunch." prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Debug/" />
 				<Option type="2" />
@@ -19,7 +19,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="libcrnlib" prefix_auto="1" extension_auto="1" />
+				<Option output="../lib/crunch" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Release/" />
 				<Option type="2" />
@@ -45,6 +45,10 @@
 			<Add option="-ffast-math" />
 			<Add option="-fno-math-errno" />
 		</Compiler>
+		<Unit filename="../inc/crn_decomp.h" />
+		<Unit filename="../inc/crn_defs.h" />
+		<Unit filename="../inc/crnlib.h" />
+		<Unit filename="../inc/dds_defs.h" />
 		<Unit filename="crn_arealist.cpp" />
 		<Unit filename="crn_arealist.h" />
 		<Unit filename="crn_assert.cpp" />
@@ -223,10 +227,6 @@
 		<Unit filename="lzma_MyVersion.h" />
 		<Unit filename="lzma_Threads.h" />
 		<Unit filename="lzma_Types.h" />
-		<Unit filename="../inc/crn_decomp.h" />
-		<Unit filename="../inc/crn_defs.h" />
-		<Unit filename="../inc/crnlib.h" />
-		<Unit filename="../inc/dds_defs.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

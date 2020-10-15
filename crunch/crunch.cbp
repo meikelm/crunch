@@ -7,20 +7,18 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="..\bin_mingw\crunchD" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="../bin/crunchD" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="--auto_config" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
-				<Linker>
-					<Add library="..\crnlib\libcrnlibD.a" />
-				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="..\bin_mingw\crunch" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Release\" />
+				<Option output="../bin/crunch" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -28,10 +26,10 @@
 					<Add option="-fomit-frame-pointer" />
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
+					<Add option="-pthread" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="..\crnlib\libcrnlib.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -42,9 +40,13 @@
 			<Add option="-Wno-unused-value" />
 			<Add option="-Wno-unused" />
 			<Add option="-fno-strict-aliasing" />
-			<Add directory="..\inc" />
-			<Add directory="..\crnlib" />
+			<Add directory="../inc" />
+			<Add directory="../crnlib" />
 		</Compiler>
+		<Linker>
+			<Add option="-lpthread" />
+			<Add library="../lib/libcrunch.a" />
+		</Linker>
 		<Unit filename="corpus_gen.cpp" />
 		<Unit filename="corpus_gen.h" />
 		<Unit filename="corpus_test.cpp" />

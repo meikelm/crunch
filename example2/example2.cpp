@@ -7,14 +7,16 @@
 // bits directly to OpenGL/D3D).
 // See Copyright Notice and license at the end of inc/crnlib.h
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+#include <memory.h>
 #include <algorithm>
 
 // CRN transcoder library.
-#include "crn_decomp.h"
+#include "../inc/crn_decomp.h"
 // .DDS file format definitions.
-#include "dds_defs.h"
+#include "../inc/dds_defs.h"
 
 // A simple high-precision, platform independent timer class.
 #include "timer.h"
@@ -34,7 +36,7 @@ static int error(const char* pMsg, ...) {
   va_list args;
   va_start(args, pMsg);
   char buf[512];
-  vsprintf_s(buf, sizeof(buf), pMsg, args);
+  vsnprintf(buf, sizeof(buf), pMsg, args);
   va_end(args);
   printf("%s", buf);
   return EXIT_FAILURE;
@@ -44,8 +46,7 @@ static int error(const char* pMsg, ...) {
 static crn_uint8* read_file_into_buffer(const char* pFilename, crn_uint32& size) {
   size = 0;
 
-  FILE* pFile = NULL;
-  fopen_s(&pFile, pFilename, "rb");
+  FILE* pFile = fopen(pFilename, "rb");
   if (!pFile)
     return NULL;
 
@@ -79,19 +80,23 @@ int main(int argc, char* argv[]) {
     if (argv[i][0] == '/')
       argv[i][0] = '-';
 
-    if (!_stricmp(argv[i], "-out")) {
+    if (!strcmp(argv[i], "-out")) {
       if (++i >= argc)
         return error("Expected output filename!");
 
-      strcpy_s(out_filename, sizeof(out_filename), argv[i]);
+      strncpy(out_filename, argv[i], sizeof(out_filename));
     } else
       return error("Invalid option: %s\n", argv[i]);
   }
-
-  // Split the source filename into its various components.
-  char drive_buf[_MAX_DRIVE], dir_buf[_MAX_DIR], fname_buf[_MAX_FNAME], ext_buf[_MAX_EXT];
-  if (_splitpath_s(pSrc_filename, drive_buf, _MAX_DRIVE, dir_buf, _MAX_DIR, fname_buf, _MAX_FNAME, ext_buf, _MAX_EXT))
-    return error("Invalid source filename!\n");
+  if(!out_filename[0])
+  {
+    strncpy(out_filename, argv[1], sizeof(out_filename) - 5);
+    int i = strlen(out_filename);
+    for(; i > 0; i--)
+      if(out_filename[i] == '.') break;
+    if(i == 0) i = strlen(out_filename);
+    strncpy(out_filename + i, ".dds", 5);
+  }
 
   // Load the source file into memory.
   printf("Loading source file: %s\n", pSrc_filename);
@@ -129,14 +134,9 @@ int main(int argc, char* argv[]) {
   }
 
   // Now create the DDS file.
-  char dst_filename[FILENAME_MAX];
-  sprintf_s(dst_filename, sizeof(dst_filename), "%s%s%s.dds", drive_buf, dir_buf, fname_buf);
-  if (out_filename[0])
-    strcpy(dst_filename, out_filename);
+  printf("Writing DDS file: %s\n", out_filename);
 
-  printf("Writing DDS file: %s\n", dst_filename);
-
-  FILE* pDDS_file = fopen(dst_filename, "wb");
+  FILE* pDDS_file = fopen(out_filename, "wb");
   if (!pDDS_file) {
     crnd::crnd_unpack_end(pContext);
     free(pSrc_file_data);
