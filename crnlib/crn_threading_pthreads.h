@@ -11,7 +11,12 @@
 #endif
 
 #include <pthread.h>
-#include <semaphore.h>
+#ifdef __APPLE__
+  typedef long int sem_t;
+  typedef int pthread_spinlock_t;
+#else
+  #include <semaphore.h>
+#endif
 #include <unistd.h>
 
 namespace crnlib {
@@ -20,7 +25,7 @@ extern uint g_number_of_processors;
 
 void crn_threading_init();
 
-typedef uint64 crn_thread_id_t;
+typedef pthread_t crn_thread_id_t;
 crn_thread_id_t crn_get_current_thread_id();
 
 void crn_sleep(unsigned int milliseconds);

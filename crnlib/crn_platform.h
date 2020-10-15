@@ -18,7 +18,7 @@ const bool c_crnlib_little_endian_platform = false;
 
 const bool c_crnlib_big_endian_platform = !c_crnlib_little_endian_platform;
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(__APPLE__)
 #define crn_fopen(pDstFile, f, m) *(pDstFile) = fopen64(f, m)
 #define crn_fseek fseeko64
 #define crn_ftell ftello64
@@ -28,7 +28,8 @@ const bool c_crnlib_big_endian_platform = !c_crnlib_little_endian_platform;
 #define crn_ftell _ftelli64
 #else
 #define crn_fopen(pDstFile, f, m) *(pDstFile) = fopen(f, m)
-#define crn_fseek(s, o, w) fseek(s, static_cast<long>(o), w)
+//#define crn_fseek(s, o, w) fseek(s, static_cast<long>(o), w)
+#define crn_fseek fseek
 #define crn_ftell ftell
 #endif
 
@@ -95,3 +96,4 @@ inline bool crnlib_is_x64() {
   return false;
 #endif
 }
+

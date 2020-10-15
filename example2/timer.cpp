@@ -7,7 +7,7 @@
 
 #include "timer.h"
 
-#if defined(WIN32)
+#if defined(_MSC_VER)
 #include <windows.h>
 #elif defined(_XBOX)
 #include <xtl.h>
@@ -17,15 +17,15 @@ unsigned long long timer::g_init_ticks;
 unsigned long long timer::g_freq;
 double timer::g_inv_freq;
 
-#if defined(WIN32) || defined(_XBOX)
+#if defined(_MSC_VER) || defined(_XBOX)
 inline void query_counter(timer_ticks* pTicks) {
   QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(pTicks));
 }
 inline void query_counter_frequency(timer_ticks* pTicks) {
   QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(pTicks));
 }
-#elif defined(__GNUC__)
-#include <sys/timex.h>
+#else
+#include <sys/time.h>
 inline void query_counter(timer_ticks* pTicks) {
   struct timeval cur_time;
   gettimeofday(&cur_time, NULL);

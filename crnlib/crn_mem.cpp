@@ -3,16 +3,22 @@
 #include "crn_core.h"
 #include "crn_console.h"
 #include "../inc/crnlib.h"
-#include <malloc.h>
+
+#ifdef WIN32
+  #include <memory.h>
+#elif defined(__APPLE__)
+  #include <malloc/malloc.h>
+  #define _msize(x)  malloc_size(x)
+#else
+  #include <stdlib.h>
+  #define _msize(x)  malloc_useable_size(x)
+#endif
+
 #if CRNLIB_USE_WIN32_API
 #include "crn_winhdr.h"
 #endif
 
 #define CRNLIB_MEM_STATS 0
-
-#if !CRNLIB_USE_WIN32_API
-#define _msize malloc_usable_size
-#endif
 
 namespace crnlib {
 #if CRNLIB_MEM_STATS
