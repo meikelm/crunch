@@ -222,7 +222,7 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <Optimization>Full</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -237,6 +237,8 @@
       <PrecompiledHeaderFile>crn_core.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Lib>
       <OutputFile>$(OutDir)libcrunch.lib</OutputFile>
