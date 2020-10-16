@@ -1141,6 +1141,37 @@ static int main_internal(int argc, char* argv[]) {
   argc;
   argv;
 
+  if (check_for_option(argc, argv, "-auto_config"))
+  {
+	  printf("CMD .png .crn \"%s\" CONV_MODE -quality CRN_QUAL -mipFilter MIP_FILT -mipMode MIP_MODE -file \"INFILE\" -out \"OUTFILE\"\n", argv[0]);
+	  printf("CMD .png .dds \"%s\" CONV_MODE -dxtQuality DXT_QUAL -mipFilter MIP_FILT -mipMode MIP_MODE -file \"INFILE\" -out \"OUTFILE\"\n", argv[0]);
+	  printf("CMD .crn .dds \"%s\" CONV_MODE -file \"INFILE\" -out \"OUTFILE\"\n", argv[0]);
+	  printf("CMD .dds .png \"%s\" -file \"INFILE\" -out \"OUTFILE\"\n", argv[0]);
+	  printf("OPTIONS Crunch\n");
+	  printf("RADIO CONV_MODE 1 -quiet Auto-pick compression\n");
+	  printf("RADIO CONV_MODE 0 -DXT1 Use DXT1 Compression (no alpha)\n");
+	  printf("RADIO CONV_MODE 0 -DXT1A Use DXT1 Compression (1-bit alpha)\n");
+	  printf("RADIO CONV_MODE 0 -DXT5 Use DXT5 Compression (smooth alpha)\n");
+	  printf("RADIO CONV_MODE 0 -DXT5A Use ATI1/RGTC1 Compression (luminance)\n");
+	  printf("RADIO CONV_MODE 0 -DXN Use ATI2/RGTC2 Compression (xy normals)\n");
+	  printf("DIV\n");
+	  printf("RADIO MIP_MODE 1 Generate Generate Mip-Maps\n");
+	  printf("RADIO MIP_MODE 0 UseSource Image Is a Mip-Map Tree\n");
+	  printf("DIV\n");
+	  printf("RADIO MIP_FILT 1 box Use box filter for Mip-Maps\n");
+	  printf("RADIO MIP_FILT 0 kaiser Use kaiser filter for Mip-Maps\n");
+	  printf("DIV\n");
+	  printf("RADIO CRN_QUAL 0 64 Lowest quality / smallest files\n");
+	  printf("RADIO CRN_QUAL 1 128 Normal .crn conversion\n");
+	  printf("RADIO CRN_QUAL 0 255 Max quality / larger files\n");
+	  printf("DIV\n");
+	  printf("RADIO DXT_QUAL 0 superfast Lowest quality / faster\n");
+	  printf("RADIO DXT_QUAL 1 normal Normal .dds conversion\n");
+	  printf("RADIO DXT_QUAL 0 uber Max quality / slower\n");
+
+	  exit(EXIT_SUCCESS);
+  }
+
   colorized_console::init();
 
   if (check_for_option(argc, argv, "quiet"))
