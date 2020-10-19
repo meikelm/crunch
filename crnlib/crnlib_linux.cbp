@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../lib/crunch." prefix_auto="1" extension_auto="1" />
+				<Option output="../lib/crunch" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Debug/" />
 				<Option type="2" />
@@ -39,6 +39,7 @@
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-g" />
+			<Add option="-pthread" />
 			<Add option="-Wno-unused-value" />
 			<Add option="-Wno-unused" />
 			<Add option="-fno-strict-aliasing" />
@@ -193,8 +194,6 @@
 		<Unit filename="crn_vector.h" />
 		<Unit filename="crn_vector2d.h" />
 		<Unit filename="crn_winhdr.h" />
-		<Unit filename="crn_zeng.cpp" />
-		<Unit filename="crn_zeng.h" />
 		<Unit filename="crnlib.cbp" />
 		<Unit filename="crnlib.cpp" />
 		<Unit filename="lzma_7zBuf.cpp" />

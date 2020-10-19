@@ -10,8 +10,8 @@
   #include <malloc/malloc.h>
   #define _msize(x)  malloc_size(x)
 #else
-  #include <stdlib.h>
-  #define _msize(x)  malloc_useable_size(x)
+  #include <malloc.h>
+  #define _msize(x)  malloc_usable_size(x)
 #endif
 
 #if CRNLIB_USE_WIN32_API

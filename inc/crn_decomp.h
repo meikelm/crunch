@@ -23,7 +23,8 @@
   #include <malloc/malloc.h>
   #define _msize(x)  malloc_size(x)
 #else
-  #define _msize(x)  malloc_useable_size(x)
+  #include <malloc.h>
+  #define _msize(x)  malloc_usable_size(x)
 #endif
 #include <stdarg.h>
 #include <new>  // needed for placement new, _msize, _expand

@@ -36,6 +36,7 @@
 		<Compiler>
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-pthread" />
 			<Add option="-fexceptions" />
 			<Add option="-Wno-unused-value" />
 			<Add option="-Wno-unused" />
@@ -44,7 +45,7 @@
 			<Add directory="../crnlib" />
 		</Compiler>
 		<Linker>
-			<Add option="-lpthread" />
+			<Add option="-pthread" />
 			<Add library="../lib/libcrunch.a" />
 		</Linker>
 		<Unit filename="corpus_gen.cpp" />
